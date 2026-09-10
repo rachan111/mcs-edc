@@ -1,0 +1,109 @@
+/* =========================================
+   MCS-EDC Global Styles
+   ========================================= */
+
+:root {
+  /* Brand Colors */
+  --color-primary: #0057a8;
+  --color-primary-dark: #003f7d;
+  --color-primary-light: #eaf4ff;
+
+  /* Neutral Colors */
+  --color-white: #ffffff;
+  --color-black: #111111;
+  --color-text: #333333;
+  --color-text-light: #666666;
+  --color-border: #d9e2ec;
+  --color-background: #f7faff;
+
+  /* Layout */
+  --container-width: 1200px;
+
+  /* Spacing */
+  --section-padding: 80px;
+
+  /* Borders */
+  --border-radius-sm: 4px;
+  --border-radius-md: 8px;
+  --border-radius-lg: 12px;
+
+  /* Shadows */
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.08);
+  --shadow-md: 0 6px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* =========================================
+   Reset
+   ========================================= */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  background: var(--color-white);
+  color: var(--color-text);
+  line-height: 1.6;
+}
+
+/* =========================================
+   Common Elements
+   ========================================= */
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+/* =========================================
+   Common Container
+   ========================================= */
+
+.container {
+  width: 100%;
+  max-width: var(--container-width);
+  margin: 0 auto;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+/* =========================================
+   Responsive
+   ========================================= */
+
+@media (max-width: 768px) {
+  :root {
+    --section-padding: 60px;
+  }
+
+  .container {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  :root {
+    --section-padding: 48px;
+  }
+}
