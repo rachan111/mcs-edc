@@ -2,6 +2,11 @@ import Header from './components/Header/Header'
 import Footer from './components/Footer/Footer'
 
 import Home from './pages/Home/Home'
+import Programs from './pages/Programs/Programs'
+import SuccessStories from './pages/SuccessStories/SuccessStories'
+import About from './pages/About/About'
+import Newsletter from './pages/Newsletter/Newsletter'
+import Contact from './pages/Contact/Contact'
 
 import ProgramOne from './pages/ProgramPages/ProgramOne/ProgramOne'
 import ProgramTwo from './pages/ProgramPages/ProgramTwo/ProgramTwo'
@@ -16,6 +21,26 @@ function App() {
   let page
 
   switch (path) {
+    case '/programs':
+      page = <Programs />
+      break
+
+    case '/success-stories':
+      page = <SuccessStories />
+      break
+
+    case '/about':
+      page = <About />
+      break
+
+    case '/newsletter':
+      page = <Newsletter />
+      break
+
+    case '/contact':
+      page = <Contact />
+      break
+
     case '/programs/program-one':
       page = <ProgramOne />
       break

@@ -8,22 +8,21 @@ function Header() {
 
   const lastScrollY = useRef(0)
 
+  const currentPath = window.location.pathname
+
   useEffect(() => {
     const handleScroll = () => {
       const currentScrollY = window.scrollY
-      const scrollDifference = currentScrollY - lastScrollY.current
 
-      // Always show header at the top
+      const scrollDifference =
+        currentScrollY - lastScrollY.current
+
       if (currentScrollY <= 10) {
         setHeaderVisible(true)
-      }
-      // Scrolling down
-      else if (scrollDifference > 5) {
+      } else if (scrollDifference > 5) {
         setHeaderVisible(false)
         setMenuOpen(false)
-      }
-      // Scrolling up
-      else if (scrollDifference < -5) {
+      } else if (scrollDifference < -5) {
         setHeaderVisible(true)
       }
 
@@ -43,15 +42,37 @@ function Header() {
     setMenuOpen(false)
   }
 
+  const isHomePage = currentPath === '/'
+
+  const isProgramsPage =
+    currentPath === '/programs' ||
+    currentPath.startsWith('/programs/')
+
+  const isSuccessStoriesPage =
+    currentPath === '/success-stories' ||
+    currentPath.startsWith('/success-stories/')
+
+  const isNewsletterPage =
+    currentPath === '/newsletter' ||
+    currentPath.startsWith('/newsletter/')
+
+  const isAboutPage =
+    currentPath === '/about' ||
+    currentPath.startsWith('/about/')
+
+  const isContactPage =
+    currentPath === '/contact' ||
+    currentPath.startsWith('/contact/')
+
   return (
     <header
       className={`site-header ${
         headerVisible ? 'visible' : 'hidden'
       }`}
     >
+
       <div className="container header-container">
 
-        {/* Logo */}
         <a
           href="/"
           className="header-logo"
@@ -63,29 +84,61 @@ function Header() {
           />
         </a>
 
-        {/* Desktop Navigation */}
+
         <nav
           className="desktop-navigation"
           aria-label="Main navigation"
         >
-          <a href="/" className="active">
+
+          <a
+            href="/"
+            className={isHomePage ? 'active' : ''}
+          >
             Home
           </a>
 
-          <a href="/programs">
+          <a
+            href="/programs"
+            className={isProgramsPage ? 'active' : ''}
+          >
             Explore Programs
           </a>
 
-          <a href="/success-stories">
+          <a
+            href="/success-stories"
+            className={
+              isSuccessStoriesPage ? 'active' : ''
+            }
+          >
             Success Stories
           </a>
 
-          <a href="/about">
+          <a
+            href="/newsletter"
+            className={
+              isNewsletterPage ? 'active' : ''
+            }
+          >
+            Newsletter
+          </a>
+
+          <a
+            href="/about"
+            className={isAboutPage ? 'active' : ''}
+          >
             About Us
           </a>
+
+          <a
+            href="/contact"
+            className={isContactPage ? 'active' : ''}
+          >
+            Contact
+          </a>
+
         </nav>
 
-        {/* Mobile Menu Button */}
+
         <button
           className="mobile-menu-button"
           type="button"
@@ -104,29 +157,68 @@ function Header() {
 
       </div>
 
-      {/* Mobile Navigation */}
+
       <nav
         className={`mobile-navigation ${
           menuOpen ? 'open' : ''
         }`}
         aria-label="Mobile navigation"
       >
-        <a href="/" onClick={closeMenu}>
+
+        <a
+          href="/"
+          className={isHomePage ? 'active' : ''}
+          onClick={closeMenu}
+        >
           Home
         </a>
 
-        <a href="/programs" onClick={closeMenu}>
+        <a
+          href="/programs"
+          className={isProgramsPage ? 'active' : ''}
+          onClick={closeMenu}
+        >
           Explore Programs
         </a>
 
-        <a href="/success-stories" onClick={closeMenu}>
+        <a
+          href="/success-stories"
+          className={
+            isSuccessStoriesPage ? 'active' : ''
+          }
+          onClick={closeMenu}
+        >
           Success Stories
         </a>
 
-        <a href="/about" onClick={closeMenu}>
+        <a
+          href="/newsletter"
+          className={
+            isNewsletterPage ? 'active' : ''
+          }
+          onClick={closeMenu}
+        >
+          Newsletter
+        </a>
+
+        <a
+          href="/about"
+          className={isAboutPage ? 'active' : ''}
+          onClick={closeMenu}
+        >
           About Us
         </a>
+
+        <a
+          href="/contact"
+          className={isContactPage ? 'active' : ''}
+          onClick={closeMenu}
+        >
+          Contact
+        </a>
+
       </nav>
+
     </header>
   )
 }
