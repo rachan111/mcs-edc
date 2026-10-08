@@ -1,8 +1,41 @@
+import { useState } from 'react'
 import './Contact.css'
 
 function Contact() {
-  const handleSubmit = (event) => {
+  const [status, setStatus] = useState({ type: '', message: '' })
+  const [isSubmitting, setIsSubmitting] = useState(false)
+
+  const handleSubmit = async (event) => {
     event.preventDefault()
+    setIsSubmitting(true)
+    setStatus({ type: '', message: '' })
+
+    const formData = new FormData(event.currentTarget)
+    const data = Object.fromEntries(formData.entries())
+
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      })
+
+      const result = await response.json()
+
+      if (!response.ok) {
+        throw new Error(result.message || 'Unable to send your message.')
+      }
+
+      setStatus({ type: 'success', message: result.message })
+      event.currentTarget.reset()
+    } catch (error) {
+      setStatus({
+        type: 'error',
+        message: error.message || 'Unable to send your message right now.'
+      })
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   return (
@@ -258,6 +291,16 @@ function Contact() {
                 </div>
 
 
+                {status.message && (
+                  <div
+                    className={`contact-form-status ${status.type}`}
+                    role="status"
+                    aria-live="polite"
+                  >
+                    {status.message}
+                  </div>
+                )}
+
                 <div className="contact-form-footer">
 
                   <p>
@@ -268,8 +311,9 @@ function Contact() {
                   <button
                     type="submit"
                     className="contact-submit"
+                    disabled={isSubmitting}
                   >
-                    Send Message
+                    {isSubmitting ? 'Sending...' : 'Send Message'}
                     <span aria-hidden="true">
                       →
                     </span>
