@@ -1,11 +1,11 @@
 import './Programs.css'
 
-import manzanoFamily from '../../assets/manzano-family-success-story.png'
-import youthbuild from '../../assets/youthbuild-program.png'
-import wildfireCleanup from '../../assets/wildfire-severe-storm-cleanup-projects.png'
-import seedsETP from '../../assets/seeds-2-5-etp.png'
-import youthbuildStory from '../../assets/mcs-edc-blog-card-5.png'
-import wipaProgram from '../../assets/mcs-edc-blog-card-6.png'
+import manzanoFamily from '../../assets/manzano-family-success-story.webp'
+import youthbuild from '../../assets/youthbuild-program.webp'
+import wildfireCleanup from '../../assets/wildfire-severe-storm-cleanup-projects.webp'
+import seedsETP from '../../assets/seeds-2-5-etp.webp'
+import youthbuildStory from '../../assets/mcs-edc-blog-card-5.webp'
+import wipaProgram from '../../assets/mcs-edc-blog-card-6.webp'
 
 const programs = [
   {

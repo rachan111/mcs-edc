@@ -4,7 +4,7 @@ function About() {
   return (
     <main className="about-page">
 
-      {/* Hero */}
+      {/* Hero */}  
       <section className="about-hero">
         <div className="container">
           <div className="about-hero-content">

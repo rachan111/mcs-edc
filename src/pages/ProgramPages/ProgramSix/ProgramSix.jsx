@@ -1,9 +1,9 @@
-import wipaImage from '../../../assets/mcs-edc-blog-card-6.png'
-import manzanoImage from '../../../assets/manzano-family-success-story.png'
-import youthbuildPresentationImage from '../../../assets/youthbuild-program.png'
-import wildfireImage from '../../../assets/wildfire-severe-storm-cleanup-projects.png'
-import seedsImage from '../../../assets/seeds-2-5-etp.png'
-import youthbuildImage from '../../../assets/mcs-edc-blog-card-5.png'
+import wipaImage from '../../../assets/mcs-edc-blog-card-6.webp'
+import manzanoImage from '../../../assets/manzano-family-success-story.webp'
+import youthbuildPresentationImage from '../../../assets/youthbuild-program.webp'
+import wildfireImage from '../../../assets/wildfire-severe-storm-cleanup-projects.webp'
+import seedsImage from '../../../assets/seeds-2-5-etp.webp'
+import youthbuildImage from '../../../assets/mcs-edc-blog-card-5.webp'
 
 import './ProgramSix.css'
 

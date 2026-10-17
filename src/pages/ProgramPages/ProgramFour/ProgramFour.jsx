@@ -1,10 +1,10 @@
-import seedsImage from '../../../assets/seeds-2-5-etp.png'
+import seedsImage from '../../../assets/seeds-2-5-etp.webp'
 
-import manzanoImage from '../../../assets/manzano-family-success-story.png'
-import youthbuildImage from '../../../assets/youthbuild-program.png'
-import wildfireImage from '../../../assets/wildfire-severe-storm-cleanup-projects.png'
-import youthbuildCardFiveImage from '../../../assets/mcs-edc-blog-card-5.png'
-import wipaImage from '../../../assets/mcs-edc-blog-card-6.png'
+import manzanoImage from '../../../assets/manzano-family-success-story.webp'
+import youthbuildImage from '../../../assets/youthbuild-program.webp'
+import wildfireImage from '../../../assets/wildfire-severe-storm-cleanup-projects.webp'
+import youthbuildCardFiveImage from '../../../assets/mcs-edc-blog-card-5.webp'
+import wipaImage from '../../../assets/mcs-edc-blog-card-6.webp'
 
 import './ProgramFour.css'
 

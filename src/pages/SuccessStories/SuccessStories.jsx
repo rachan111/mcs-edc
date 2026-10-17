@@ -1,6 +1,6 @@
 import './SuccessStories.css'
 
-import manzanoFamily from '../../assets/manzano-family-success-story.png'
+import manzanoFamily from '../../assets/manzano-family-success-story.webp'
 
 const successStories = [
   {
