@@ -1,149 +1,364 @@
+
 import { useState } from 'react'
 import './Contact.css'
 
+const CAPTCHA_CHARACTERS = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789'
+
+function generateCaptcha() {
+  return Array.from({ length: 5 }, () => {
+    const index = Math.floor(
+      Math.random() * CAPTCHA_CHARACTERS.length
+    )
+
+    return CAPTCHA_CHARACTERS[index]
+  }).join('')
+}
+
 function Contact() {
-  const [status, setStatus] = useState({ type: '', message: '' })
-  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [captcha, setCaptcha] = useState(generateCaptcha)
+  const [captchaInput, setCaptchaInput] = useState('')
+  const [captchaError, setCaptchaError] = useState('')
+  const [formMessage, setFormMessage] = useState('')
+  const [messageType, setMessageType] = useState('')
 
-  const handleSubmit = async (event) => {
+  const refreshCaptcha = () => {
+    setCaptcha(generateCaptcha())
+    setCaptchaInput('')
+    setCaptchaError('')
+    setFormMessage('')
+    setMessageType('')
+  }
+
+  const handleSubmit = (event) => {
     event.preventDefault()
-    setIsSubmitting(true)
-    setStatus({ type: '', message: '' })
 
-    const formData = new FormData(event.currentTarget)
-    const data = Object.fromEntries(formData.entries())
+    setCaptchaError('')
+    setFormMessage('')
+    setMessageType('')
 
-    try {
-      const response = await fetch('/api/contact', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data)
-      })
-
-      const result = await response.json()
-
-      if (!response.ok) {
-        throw new Error(result.message || 'Unable to send your message.')
-      }
-
-      setStatus({ type: 'success', message: result.message })
-      event.currentTarget.reset()
-    } catch (error) {
-      setStatus({
-        type: 'error',
-        message: error.message || 'Unable to send your message right now.'
-      })
-    } finally {
-      setIsSubmitting(false)
+    if (!captchaInput.trim()) {
+      setCaptchaError('Please enter the CAPTCHA code.')
+      return
     }
+
+    if (captchaInput.trim().toUpperCase() !== captcha) {
+      setCaptchaError(
+        'The CAPTCHA code is incorrect. Please try again.'
+      )
+      setCaptcha(generateCaptcha())
+      setCaptchaInput('')
+      return
+    }
+
+    /*
+      CAPTCHA verification passed in the browser.
+
+      Email delivery is not connected in this handler.
+      Connect a server-side endpoint before using this
+      form to receive real contact messages.
+    */
+
+    setMessageType('success')
+    setFormMessage(
+      'CAPTCHA verified successfully! Email submission is not connected yet.'
+    )
+
+    setCaptcha(generateCaptcha())
+    setCaptchaInput('')
+    event.currentTarget.reset()
   }
 
   return (
-    <section className="contact-section" id="contact">
-      <div className="container">
+    <main className="contact-page">
+      <section className="contact-section">
+        <div className="container">
 
-        {/* Contact Heading */}
-        <div className="contact-heading">
-          <span className="contact-label">
-            Get In Touch
-          </span>
+          <div className="contact-layout">
 
-          <h2>Contact Us</h2>
+            {/* Contact information */}
+            <aside className="contact-info-panel">
 
-          <div
-            className="contact-line"
-            aria-hidden="true"
-          ></div>
+              <span className="contact-eyebrow">
+                Get In Touch
+              </span>
 
-          <p>
-            Have a question, want to learn more about our programs,
-            or looking to connect with MCS-EDC? We would love to
-            hear from you.
-          </p>
-        </div>
+              <h1>
+                Let's start a
+                <br />
+                conversation.
+              </h1>
 
-        {/* Contact Form */}
-        <div className="contact-form-wrapper">
-          <form
-            className="contact-form"
-            onSubmit={handleSubmit}
-          >
+              <p className="contact-intro">
+                Have a question about MCS-EDC, our programs,
+                or the opportunities we offer? Send us a
+                message and connect with our team.
+              </p>
 
-            {/* Name + Email */}
-            <div className="contact-form-row">
+              <div className="contact-info-list">
 
-              <div className="form-field">
-                <label htmlFor="contact-name">
-                  Name
-                </label>
+                <div className="contact-info-item">
+                  <span className="contact-info-label">
+                    Email
+                  </span>
+                  <a href="mailto:info@mcs-edc.org">
+                    info@mcs-edc.org
+                  </a>
+                </div>
 
-                <input
-                  type="text"
-                  id="contact-name"
-                  name="name"
-                  placeholder="Enter your name"
-                  autoComplete="name"
-                  required
-                />
+                <div className="contact-info-item">
+                  <span className="contact-info-label">
+                    Address
+                  </span>
+                  <p>
+                    3333 Wilshire Blvd. Suite 405
+                    <br />
+                    Los Angeles, CA 90010
+                  </p>
+                </div>
+
+                <div className="contact-info-item">
+                  <span className="contact-info-label">
+                    Office Hours
+                  </span>
+                  <p>Monday – Friday, 9:00 AM – 5:00 PM</p>
+                </div>
+
               </div>
 
-              <div className="form-field">
-                <label htmlFor="contact-email">
-                  Email
-                </label>
-
-                <input
-                  type="email"
-                  id="contact-email"
-                  name="email"
-                  placeholder="Enter your email"
-                  autoComplete="email"
-                  required
-                />
+              <div className="contact-info-bottom">
+                Workforce and Economic Development for All.
               </div>
 
-            </div>
+            </aside>
 
-            {/* Message */}
-            <div className="form-field">
-              <label htmlFor="contact-message">
-                Message
-              </label>
 
-              <textarea
-                id="contact-message"
-                name="message"
-                placeholder="Write your message..."
-                rows="6"
-                required
-              ></textarea>
-            </div>
+            {/* Contact form */}
+            <div className="contact-form-panel">
 
-            {status.message && (
-              <div
-                className={`contact-form-status ${status.type}`}
-                role="status"
-                aria-live="polite"
+              <div className="contact-form-heading">
+                <span>Contact Us</span>
+                <h2>Send us a message</h2>
+                <p>
+                  Fill in the details below. All fields are
+                  required.
+                </p>
+              </div>
+
+
+              <form
+                className="contact-form"
+                onSubmit={handleSubmit}
               >
-                {status.message}
-              </div>
-            )}
 
-            {/* Submit Button */}
-            <button
-              type="submit"
-              className="contact-submit"
-              disabled={isSubmitting}
-            >
-              {isSubmitting ? 'Sending...' : 'Submit'}
-              <span aria-hidden="true">→</span>
-            </button>
+                <div className="contact-form-row">
 
-          </form>
+                  <div className="contact-form-group">
+                    <label htmlFor="contact-name">
+                      Full Name
+                    </label>
+
+                    <input
+                      id="contact-name"
+                      name="name"
+                      type="text"
+                      placeholder="Enter your full name"
+                      autoComplete="name"
+                      maxLength={100}
+                      required
+                    />
+                  </div>
+
+
+                  <div className="contact-form-group">
+                    <label htmlFor="contact-email">
+                      Email Address
+                    </label>
+
+                    <input
+                      id="contact-email"
+                      name="email"
+                      type="email"
+                      placeholder="you@example.com"
+                      autoComplete="email"
+                      maxLength={254}
+                      required
+                    />
+                  </div>
+
+                </div>
+
+
+                <div className="contact-form-group">
+                  <label htmlFor="contact-subject">
+                    Subject
+                  </label>
+
+                  <input
+                    id="contact-subject"
+                    name="subject"
+                    type="text"
+                    placeholder="What is your message about?"
+                    maxLength={150}
+                    required
+                  />
+                </div>
+
+
+                <div className="contact-form-group">
+                  <label htmlFor="contact-message">
+                    Message
+                  </label>
+
+                  <textarea
+                    id="contact-message"
+                    name="message"
+                    rows={5}
+                    placeholder="Write your message here..."
+                    maxLength={5000}
+                    required
+                  />
+                </div>
+
+
+                {/* Custom text CAPTCHA */}
+                <div className="contact-captcha">
+
+                  <div className="contact-captcha-heading">
+                    <div>
+                      <label htmlFor="captcha-answer">
+                        Security Verification
+                      </label>
+
+                      <p>
+                        Enter the characters shown below.
+                      </p>
+                    </div>
+
+                    <button
+                      type="button"
+                      className="captcha-refresh"
+                      onClick={refreshCaptcha}
+                      aria-label="Generate a new CAPTCHA code"
+                      title="Generate a new code"
+                    >
+                      <span aria-hidden="true">↻</span>
+                      <span>Refresh</span>
+                    </button>
+                  </div>
+
+
+                  <div className="captcha-challenge-row">
+
+                    <div
+                      className="captcha-challenge"
+                      aria-label="CAPTCHA code. Enter the five displayed characters."
+                    >
+                      {captcha.split('').map((character, index) => (
+                        <span
+                          className={`captcha-character captcha-character-${index + 1}`}
+                          key={`${character}-${index}`}
+                          aria-hidden="true"
+                        >
+                          {character}
+                        </span>
+                      ))}
+                    </div>
+
+                    <span className="captcha-length">
+                      5 characters
+                    </span>
+
+                  </div>
+
+
+                  <div className="contact-form-group captcha-input-group">
+                    <input
+                      id="captcha-answer"
+                      name="captcha"
+                      type="text"
+                      placeholder="Enter CAPTCHA code"
+                      value={captchaInput}
+                      onChange={(event) => {
+                        setCaptchaInput(
+                          event.target.value
+                            .replace(/[^a-zA-Z0-9]/g, '')
+                            .slice(0, 5)
+                        )
+
+                        setCaptchaError('')
+                        setFormMessage('')
+                        setMessageType('')
+                      }}
+                      autoComplete="off"
+                      autoCapitalize="characters"
+                      spellCheck={false}
+                      maxLength={5}
+                      aria-invalid={Boolean(captchaError)}
+                      aria-describedby={
+                        captchaError
+                          ? 'captcha-error'
+                          : 'captcha-help'
+                      }
+                      required
+                    />
+
+                    {captchaError && (
+                      <p
+                        className="captcha-error"
+                        id="captcha-error"
+                        role="alert"
+                      >
+                        {captchaError}
+                      </p>
+                    )}
+
+                    {!captchaError && (
+                      <p
+                        className="captcha-help"
+                        id="captcha-help"
+                      >
+                        Letters are not case-sensitive.
+                      </p>
+                    )}
+                  </div>
+
+                </div>
+
+
+                {formMessage && (
+                  <div
+                    className={`contact-form-feedback ${messageType}`}
+                    role="status"
+                    aria-live="polite"
+                  >
+                    {formMessage}
+                  </div>
+                )}
+
+
+                <button
+                  type="submit"
+                  className="contact-submit-button"
+                >
+                  Verify and Continue
+                  <span aria-hidden="true">→</span>
+                </button>
+
+                <p className="contact-form-note">
+                  Your information should be handled securely.
+                  Do not include passwords or sensitive personal
+                  information in your message.
+                </p>
+
+              </form>
+
+            </div>
+
+          </div>
+
         </div>
-
-      </div>
-    </section>
+      </section>
+    </main>
   )
 }
 
